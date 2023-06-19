@@ -54,7 +54,7 @@
         app:layout_constraintEnd_toStartOf="@+id/albumButton"
         app:layout_constraintTop_toBottomOf="@+id/messageTextView"
         android:background="@drawable/border"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        app:srcCompat="@android:drawable/ic_menu_camera" />
 
     <ImageButton
         android:id="@+id/videoButton"

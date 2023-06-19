@@ -39,16 +39,15 @@ class MainActivity : AppCompatActivity() {
         view.root.setBackgroundColor(Color.parseColor("#E0E0E0"))
         setContentView(view.root)
 
+        chatts.addOnListChangedCallback(propertyObserver)
         chattListAdapter = ChattListAdapter(this, chatts)
         view.chattListView.setAdapter(chattListAdapter)
         
         view.refreshContainer.setOnRefreshListener {
-            getChatts()
+            refreshTimeline()
         }
 
         getChatts()
-
-        chatts.addOnListChangedCallback(propertyObserver)
     }
 
     override fun onDestroy() {

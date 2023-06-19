@@ -2,7 +2,7 @@
 buildscript {
     ext {
         // '7.4.0' if you're using Android Studio Electric Eel
-        gradle_version = '8.0.2'
+        gradle_version = '7.4.0'
         kotlin_version = '1.8.0'
     }
 }

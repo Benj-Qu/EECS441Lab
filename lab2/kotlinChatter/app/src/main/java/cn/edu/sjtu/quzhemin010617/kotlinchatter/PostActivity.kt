@@ -1,12 +1,12 @@
 package cn.edu.sjtu.quzhemin010617.kotlinchatter
 
+import android.Manifest
 import android.app.Activity
 import android.content.ComponentName
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -18,6 +18,7 @@ import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import cn.edu.sjtu.quzhemin010617.kotlinchatter.ChattStore.postChatt
 import cn.edu.sjtu.quzhemin010617.kotlinchatter.databinding.ActivityPostBinding
@@ -29,6 +30,14 @@ class PostActivity : AppCompatActivity() {
     private lateinit var forCropResult: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        view = ActivityPostBinding.inflate(layoutInflater)
+        setContentView(view.root)
+
+        view.videoButton.setImageResource(viewState.videoIcon)
+        viewState.imageUri?.let { view.previewImage.display(it) }
+
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
             results.forEach {
                 if (!it.value) {
@@ -36,10 +45,10 @@ class PostActivity : AppCompatActivity() {
                     finish()
                 }
             }
-        }.launch(arrayOf(android.Manifest.permission.CAMERA,
-            android.Manifest.permission.RECORD_AUDIO,
-            android.Manifest.permission.READ_MEDIA_IMAGES,
-            android.Manifest.permission.READ_MEDIA_VIDEO))
+        }.launch(arrayOf(Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.READ_MEDIA_IMAGES,
+            Manifest.permission.READ_MEDIA_VIDEO))
 
         val cropIntent = initCropIntent()
         val forPickedResult =
@@ -114,14 +123,6 @@ class PostActivity : AppCompatActivity() {
             viewState.videoUri = mediaStoreAlloc("video/mp4")
             captureVidRes.launch(viewState.videoUri)
         }
-
-        super.onCreate(savedInstanceState)
-
-        view = ActivityPostBinding.inflate(layoutInflater)
-        setContentView(view.root)
-
-        view.videoButton.setImageResource(viewState.videoIcon)
-        viewState.imageUri?.let { view.previewImage.display(it) }
     }
 
     private fun mediaStoreAlloc(mediaType: String): Uri? {
