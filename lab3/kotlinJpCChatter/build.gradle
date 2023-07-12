@@ -3,7 +3,7 @@
 buildscript {
     ext {
         gradle_version = '8.0.2'
-        kotlin_version = '1.7.20'
+        kotlin_version = '1.8.10'
         // https://developer.android.com/jetpack/androidx/releases/compose
         compose_ui_version = '1.2.0-beta02'
     }
